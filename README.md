@@ -1,16 +1,10 @@
 # tester_project
 
-A new Flutter project.
+Hey, this is my flutter test project to check how multiple pages works in flutter.
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+I just simple created a bottom navigation bar, there are four buttons in the nav bar but you can switch only between chat and dashboard page.
+If you want to create something similar, you need to check the home, dashoard and chat.dart files.
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Click to the start if that was useful for you.
