@@ -1,6 +1,7 @@
 # tester_project
 
 Hey, this is my flutter test project to check how multiple pages works in flutter.
+Flutter version: 2.2.1
 
 ## Getting Started
 
