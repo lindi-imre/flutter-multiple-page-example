@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tester_project/page/chat.dart';
-import 'package:tester_project/page/dashboard.dart';
+import 'package:tester_project/page/marketing.dart';
+import 'package:tester_project/page/player.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -9,10 +10,10 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   int currentTab = 0;
-  final List<Widget> screens = [Dashboard(), Chat()];
+  final List<Widget> screens = [Player(), Chat(), Marketing()];
 
   final PageStorageBucket bucket = PageStorageBucket();
-  Widget currentScreen = Dashboard();
+  Widget currentScreen = Player();
 
   @override
   Widget build(BuildContext context) {
@@ -32,14 +33,16 @@ class _HomeState extends State<Home> {
                 bucket: bucket,
               )),
           floatingActionButton: FloatingActionButton(
-            child: Icon(Icons.dashboard),
+            backgroundColor: Colors.grey,
+            child: Icon(Icons.play_arrow),
             onPressed: () {},
           ),
           floatingActionButtonLocation:
               FloatingActionButtonLocation.centerDocked,
           bottomNavigationBar: BottomAppBar(
+            color: Colors.black,
             shape: CircularNotchedRectangle(),
-            notchMargin: 10,
+            notchMargin: 6,
             child: Container(
               height: 60,
               child: Row(
@@ -51,14 +54,14 @@ class _HomeState extends State<Home> {
                       MaterialButton(
                         onPressed: () {
                           setState(() {
-                            currentScreen = Dashboard();
+                            currentScreen = Player();
                             currentTab = 0;
                           });
                         },
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Icon(Icons.dashboard,
+                            Icon(Icons.wifi_tethering,
                                 color:
                                     currentTab == 0 ? Colors.blue : Colors.grey)
                           ],
@@ -74,7 +77,7 @@ class _HomeState extends State<Home> {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Icon(Icons.message,
+                            Icon(Icons.calendar_today_rounded,
                                 color:
                                     currentTab == 1 ? Colors.blue : Colors.grey)
                           ],
@@ -88,31 +91,31 @@ class _HomeState extends State<Home> {
                       MaterialButton(
                         onPressed: () {
                           setState(() {
-                            currentScreen = Dashboard();
-                            currentTab = 0;
+                            currentScreen = Marketing();
+                            currentTab = 2;
                           });
                         },
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Icon(Icons.dashboard,
+                            Icon(Icons.shopping_cart_rounded,
                                 color:
-                                    currentTab == 0 ? Colors.blue : Colors.grey)
+                                    currentTab == 2 ? Colors.blue : Colors.grey)
                           ],
                         ),
                       ),
                       MaterialButton(
                         onPressed: () {
                           setState(() {
-                            currentScreen = Chat();
-                            currentTab = 1;
+                            currentScreen = Marketing();
+                            currentTab = 3;
                           });
                         },
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Icon(Icons.message,
-                                color: currentTab == 1
+                            Icon(Icons.facebook,
+                                color: currentTab == 3
                                     ? Colors.blue
                                     : Colors.grey),
                           ],
