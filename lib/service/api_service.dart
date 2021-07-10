@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:http/http.dart' as http;
+import 'package:tester_project/model/merchant_element.dart';
 import 'dart:convert';
 import 'package:tester_project/model/show_element.dart';
 
@@ -21,20 +22,33 @@ class ApiService {
   Future<List<ShowElement>> getShowElements() async {
     log("start fetching");
     final res = await http.get(Uri.parse(showUrl));
-    log(res.body);
     if(res.statusCode == 200) {
       List<dynamic> json = jsonDecode(res.body);
 
       List<ShowElement> showElements =
       json.map((dynamic item) => ShowElement.fromJson(item)).toList();
+      showElements.add(ShowElement(name: "", description: "", timeFull: ""));
       log(showElements.toString());
-      for (ShowElement e in showElements) {
-        log(e.name);
-      }
       return showElements;
     }
     else {
       throw ("Can't get showELements");
+    }
+  }
+
+  Future<List<MerchantElement>> getMerchantElements() async {
+    log("start fetching");
+    final res = await http.get(Uri.parse(merchantUrl));
+    if(res.statusCode == 200) {
+      List<dynamic> json = jsonDecode(res.body);
+
+      List<MerchantElement> merchantElements =
+      json.map((dynamic item) => MerchantElement.fromJson(item)).toList();
+      log(merchantElements.toString());
+      return merchantElements;
+    }
+    else {
+      throw ("Can't get merchantELements");
     }
   }
 }

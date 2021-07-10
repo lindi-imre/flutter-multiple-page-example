@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:tester_project/model/show_element.dart';
 import 'package:tester_project/service/api_service.dart';
@@ -7,6 +9,7 @@ class Chat extends StatefulWidget {
   _ChatState createState() => _ChatState();
 }
 
+// The chat is the SHOWS page TODO: refactor
 class _ChatState extends State<Chat> {
   ApiService client = ApiService();
 
@@ -25,15 +28,17 @@ class _ChatState extends State<Chat> {
                 future: client.getShowElements(),
                 builder: (BuildContext context,
                     AsyncSnapshot<List<ShowElement>> snapshot) {
-                  if(snapshot.hasData) {
+                  if (snapshot.hasData) {
                     List<ShowElement>? showsList = snapshot.data;
                     return ListView.builder(
-                        itemCount: showsList!.length,
-                        itemBuilder: (context, index) =>
-                          ListTile(
-                            title: Text(showsList[index].name),
-
-                          ),
+                      itemCount: showsList!.length,
+                      itemBuilder: (context, index) => ListTile(
+                        title: Text(
+                            showsList[index].name +
+                                "\n    " +
+                                showsList[index].timeFull,
+                            style: TextStyle(height: 2)),
+                      ),
                     );
                   }
                   return Center(

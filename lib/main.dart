@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:tester_project/service/api_service.dart';
 import 'home.dart';
 
 void main() {
