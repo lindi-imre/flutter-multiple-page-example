@@ -45,6 +45,7 @@ class _MarketingState extends State<Marketing> {
                                       child: CachedNetworkImage(
                                         imageUrl: merchantList[index].imgUrl,
                                         placeholder: (context, url) => new CircularProgressIndicator(),
+                                        errorWidget: (context, url, error) => new Icon(Icons.error),
                                         width: MediaQuery.of(context).size.width * 0.8,
                                       )
                                   ),

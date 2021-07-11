@@ -83,7 +83,10 @@ class _PlayerState extends State<Player> {
               Column(
                 children: [
                   Container(
-                    margin: EdgeInsets.only(top: screenHeight > 700 ? screenHeight * 0.06 : screenHeight * 0.02),
+                    margin: EdgeInsets.only(
+                        top: screenHeight > 700
+                            ? screenHeight * 0.06
+                            : screenHeight * 0.02),
                     width: screenWidth * 0.7,
                     decoration: BoxDecoration(
                         borderRadius:
@@ -93,8 +96,13 @@ class _PlayerState extends State<Player> {
                         child: (imgUrl == null || imgUrl == "")
                             ? Image(
                                 image: AssetImage('images/mobile_friendly.png'),
-                                height: screenHeight > 700 ? screenWidth * 0.7 : screenWidth * 0.65)
-                            : Image.network(imgUrl, height: screenHeight > 700 ? screenWidth * 0.7 : screenWidth * 0.65)),
+                                height: screenHeight > 700
+                                    ? screenWidth * 0.7
+                                    : screenWidth * 0.65)
+                            : Image.network(imgUrl,
+                                height: screenHeight > 700
+                                    ? screenWidth * 0.7
+                                    : screenWidth * 0.65)),
                   ),
                   Container(
                     margin: EdgeInsets.only(top: screenHeight * 0.03),
@@ -115,7 +123,10 @@ class _PlayerState extends State<Player> {
                     ),
                   ),
                   Container(
-                    margin: EdgeInsets.only(top: screenHeight > 700 ? screenHeight * 0.05 : screenHeight * 0.03),
+                    margin: EdgeInsets.only(
+                        top: screenHeight > 700
+                            ? screenHeight * 0.05
+                            : screenHeight * 0.03),
                     child: FlutterVolumeSlider(
                       display: Display.HORIZONTAL,
                       sliderActiveColor: Colors.red,
