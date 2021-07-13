@@ -17,7 +17,7 @@ class _MarketingState extends State<Marketing> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: Text('Marketing')),
+        appBar: AppBar(title: Text('SHOP & INFO')),
         body: Container(
             decoration: BoxDecoration(
                 gradient: LinearGradient(
