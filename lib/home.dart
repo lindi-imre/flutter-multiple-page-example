@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:tester_project/page/chat.dart';
 import 'package:tester_project/page/marketing.dart';
 import 'package:tester_project/page/player.dart';
 import 'package:audio_service/audio_service.dart';
 import 'package:tester_project/service/database.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 MediaItem mediaItem = MediaItem(
     id: songList[0].url,
@@ -25,24 +27,18 @@ class AudioPlayerTask extends BackgroundAudioTask {
   @override
   Future<void> onStart(Map<String, dynamic>? params) async {
     AudioServiceBackground.setState(
-        controls: [
-          MediaControl.stop
-        ],
+        controls: [MediaControl.stop],
         playing: true,
-        processingState: AudioProcessingState.connecting
-    );
+        processingState: AudioProcessingState.connecting);
 
     await _audioPlayer.setUrl(mediaItem.id);
     AudioServiceBackground.setMediaItem(mediaItem);
 
     _audioPlayer.play();
     AudioServiceBackground.setState(
-        controls: [
-          MediaControl.stop
-        ],
+        controls: [MediaControl.stop],
         playing: true,
-        processingState: AudioProcessingState.ready
-    );
+        processingState: AudioProcessingState.ready);
 
     return super.onStart(params);
   }
@@ -52,8 +48,7 @@ class AudioPlayerTask extends BackgroundAudioTask {
     AudioServiceBackground.setState(
         controls: [MediaControl.play],
         playing: false,
-        processingState: AudioProcessingState.stopped
-    );
+        processingState: AudioProcessingState.stopped);
     await _audioPlayer.stop();
     return super.onStop();
   }
@@ -63,8 +58,7 @@ class AudioPlayerTask extends BackgroundAudioTask {
     AudioServiceBackground.setState(
         controls: [MediaControl.stop],
         playing: true,
-        processingState: AudioProcessingState.ready
-    );
+        processingState: AudioProcessingState.ready);
 
     await _audioPlayer.pause();
 
@@ -76,8 +70,7 @@ class AudioPlayerTask extends BackgroundAudioTask {
     AudioServiceBackground.setState(
         controls: [MediaControl.stop],
         playing: true,
-        processingState: AudioProcessingState.ready
-    );
+        processingState: AudioProcessingState.ready);
 
     await _audioPlayer.play();
 
@@ -86,10 +79,9 @@ class AudioPlayerTask extends BackgroundAudioTask {
 
   @override
   Future<void> onSkipToNext() async {
-    if(current < songList.length-1 ) {
+    if (current < songList.length - 1) {
       current = current + 1;
-    }
-    else {
+    } else {
       current = 0;
     }
     String url = songList[0].icon;
@@ -108,10 +100,9 @@ class AudioPlayerTask extends BackgroundAudioTask {
 
   @override
   Future<void> onSkipToPrevious() async {
-    if(current > 0) {
+    if (current > 0) {
       current = current - 1;
-    }
-    else {
+    } else {
       current = songList.length - 1;
     }
     String url = songList[current].icon;
@@ -130,7 +121,6 @@ class AudioPlayerTask extends BackgroundAudioTask {
 }
 
 class Home extends StatefulWidget {
-
   var volume = 0.8;
 
   @override
@@ -138,7 +128,6 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-
   static const url = 'https://s5.radio.co/s0ec7c069a/listen';
   bool isPlaying = false;
 
@@ -174,8 +163,15 @@ class _HomeState extends State<Home> {
                   gradient: LinearGradient(
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
-                      stops: [0.2, 0.5, 0.85],
-                      colors: [Colors.black12, Colors.black87, Colors.black12
+                      stops: [
+                    0.2,
+                    0.5,
+                    0.85
+                  ],
+                      colors: [
+                    Colors.black12,
+                    Colors.black87,
+                    Colors.black12
                   ])),
               child: PageStorage(
                 child: currentScreen,
@@ -186,14 +182,13 @@ class _HomeState extends State<Home> {
             child: isPlaying ? Icon(Icons.pause) : Icon(Icons.play_arrow),
             onPressed: () {
               setState(() {
-                if(isPlaying) {
+                if (isPlaying) {
                   _audioPlayer.stop();
                   isPlaying = false;
-                }
-                else {
+                } else {
                   _audioPlayer.play();
                   _audioPlayer.playerStateStream.listen((event) {
-                    if(event.playing) {
+                    if (event.playing) {
                       isPlaying = true;
                     }
                   });
@@ -270,18 +265,36 @@ class _HomeState extends State<Home> {
                       ),
                       MaterialButton(
                         onPressed: () {
-                          setState(() {
-                            currentScreen = Marketing();
-                            currentTab = 3;
-                          });
+                          showAboutDialog(
+                              context: context,
+                              applicationIcon: IconButton(
+                                  onPressed: () => Fluttertoast.showToast(
+                                      msg: "Cool Radio NYC v1.0",
+                                      toastLength: Toast.LENGTH_SHORT),
+                                  icon:
+                                      Image.asset('images/launcher-icon.png')),
+                              applicationName: 'Cool Radio NYC',
+                              applicationVersion: '1.0',
+                              applicationLegalese:
+                                  'Developed by Imre Lindi, Powered by Flutter',
+                              children: [
+                                Container(
+                                    margin: EdgeInsets.only(top: 15),
+                                    child: InkWell(
+                                        child: Text(
+                                          'If you find any problem, feel free to write us. Email: info@coolradionyc.com',
+                                          style: TextStyle(fontSize: 12),
+                                        ),
+                                        onTap: () {
+                                          _makeEmail(
+                                              "mailto:info@coolradionyc.com");
+                                        }))
+                              ]);
                         },
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Icon(Icons.facebook,
-                                color: currentTab == 3
-                                    ? Colors.blue
-                                    : Colors.grey),
+                            Icon(Icons.info_outline, color: Colors.grey),
                           ],
                         ),
                       )
@@ -292,5 +305,13 @@ class _HomeState extends State<Home> {
             ),
           ),
         ));
+  }
+}
+
+Future<void> _makeEmail(String url) async {
+  if (await canLaunch(url)) {
+    await launch(url);
+  } else {
+    throw 'Could not launch $url';
   }
 }

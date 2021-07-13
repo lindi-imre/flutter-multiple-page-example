@@ -44,7 +44,7 @@ class _MarketingState extends State<Marketing> {
                                       borderRadius: BorderRadius.circular(5),
                                       child: CachedNetworkImage(
                                         imageUrl: merchantList[index].imgUrl,
-                                        placeholder: (context, url) => new CircularProgressIndicator(),
+                                        placeholder: (context, url) => new LinearProgressIndicator(),
                                         errorWidget: (context, url, error) => new Icon(Icons.error),
                                         width: MediaQuery.of(context).size.width * 0.8,
                                       )
