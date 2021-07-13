@@ -140,12 +140,12 @@ class _PlayerState extends State<Player> {
                               top: screenHeight *
                                   (screenHeight > 700 ? 0.07 : 0.04)),
                           child: Text(
-                            "STUDIO: +1 292 271 8880",
+                            "STUDIO: +1 929 271 8880",
                             style: TextStyle(
                                 fontWeight: FontWeight.bold, fontSize: 17),
                           )),
                       onTap: () {
-                        _makePhoneCall("tel:+12922718880");
+                        _makePhoneCall("tel:+19292718880");
                         Fluttertoast.showToast(
                             msg: "Telefon app megnyitása",
                             toastLength: Toast.LENGTH_SHORT);
